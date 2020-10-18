@@ -32,7 +32,7 @@ const moviesStore = {
     },
     actions: {
         initMoviesStore: {
-            handler({ dispatch }) {
+            handler({ dispatch }) { 
                 dispatch("fetchMovies");
             },
             root: true, // available for all app
