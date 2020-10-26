@@ -29,14 +29,23 @@ export default {
   computed: {
     ...mapGetters("movies", ["moviesList", "perPage", "curPage", "total"]) // get getters from movies store (store name, arr of getters names)
   },
+  watch: {
+    "$route.query": {
+       handler: "onChangeQuery",
+       immediate: true,
+       deep: true
+    }
+  },
   methods: {
     ...mapActions("movies", ["changeCurrentPage"]),
     onChangePoster(poster) {
       this.pagePoster = poster;
     },
     onChangePage(page) {
-      console.log("new page");
-      this.changeCurrentPage(page);
+      this.$router.push({ query: { page } });
+    },
+    onChangeQuery({ page = 1 }) {
+      this.changeCurrentPage(Number(page));
     }
   }
 };
