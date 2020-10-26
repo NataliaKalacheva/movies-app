@@ -3,7 +3,10 @@
   <div id="app">
     <PagePoster :poster="pagePoster"/>
     <MoviesList :list="moviesList" @changePoster="onChangePoster"/>
-    <Pagination :perPage="perPage" :curPage="curPage" :total="total"/>
+    <Pagination :perPage="perPage" 
+                :curPage="curPage"
+                :total="total" 
+                @onChangePage="onChangePage"/>
   </div>
 </template>
 
@@ -27,9 +30,13 @@ export default {
     ...mapGetters("movies", ["moviesList", "perPage", "curPage", "total"]) // get getters from movies store (store name, arr of getters names)
   },
   methods: {
-    ...mapActions("movies", ["fetchMovies"]),
+    ...mapActions("movies", ["changeCurrentPage"]),
     onChangePoster(poster) {
       this.pagePoster = poster;
+    },
+    onChangePage(page) {
+      console.log("new page");
+      this.changeCurrentPage(page);
     }
   }
 };

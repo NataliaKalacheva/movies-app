@@ -1,12 +1,12 @@
 <template>
   <div class="movies-pagination overflow-auto">
     <b-pagination
-      v-model="curPage"
+      v-model="currentPageModel"
       :total-rows="total"
       :per-page="perPage"
     ></b-pagination>
 
-    <p class="mt-3">Current Page: {{ currentPage }}</p>
+    <p class="mt-3">Current Page: {{ curPage }}</p>
   </div>
 </template>
 
@@ -32,7 +32,9 @@
         get() {
           return this.curPage;
         },
-        set() {}
+        set(value) {
+          this.$emit('onChangePage', value);
+        }
       }
     }
   }

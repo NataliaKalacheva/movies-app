@@ -16,7 +16,6 @@ export default {
       }),
       computed: {
         posterStyle() {
-          console.log(this.posterBg);
           return {
             "background-image": this.posterBg,
           }
