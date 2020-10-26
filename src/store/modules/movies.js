@@ -23,7 +23,8 @@ const moviesStore = {
         moviesList: ({ movies }) => movies,
         slicedIds: ({ top250 }) => (from, to) => top250.slice(from, to),
         curPage: ({ curPage }) => curPage,
-        perPage: ({ perPage }) => perPage
+        perPage: ({ perPage }) => perPage,
+        total: ({ top250 }) => Object.keys(top250).length
     },
     mutations: {
         [MOVIES](state, value) {

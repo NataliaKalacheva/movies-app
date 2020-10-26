@@ -3,7 +3,7 @@
     <h3 class="list-title">IMDB Top 250</h3>
     <BRow>
       <template v-if="isExist">
-        <BCol cols="3" v-for="(movie, key) in list" :key="key">
+        <BCol cols md="6" lg="3" v-for="(movie, key) in list" :key="key">
           <MovieItem :movie="movie" @mouseover.native="onMouseOver(movie.Poster)"/>
         </BCol>
       </template>

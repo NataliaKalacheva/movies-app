@@ -3,6 +3,7 @@
   <div id="app">
     <PagePoster :poster="pagePoster"/>
     <MoviesList :list="moviesList" @changePoster="onChangePoster"/>
+    <Pagination :perPage="perPage" :curPage="curPage" :total="total"/>
   </div>
 </template>
 
@@ -10,18 +11,20 @@
 import { mapActions, mapGetters } from 'vuex';
 import MoviesList from "@/components/MoviesList";
 import PagePoster from "@/components/PagePoster";
+import Pagination from "@/components/Pagination";
 
 export default {
   name: "App",
   components: {
     MoviesList,
-    PagePoster
+    PagePoster,
+    Pagination
   },
   data: () => ({
     pagePoster: ""
   }),
   computed: {
-    ...mapGetters("movies", ["moviesList"]) // get getters from movies store (store name, arr of getters names)
+    ...mapGetters("movies", ["moviesList", "perPage", "curPage", "total"]) // get getters from movies store (store name, arr of getters names)
   },
   methods: {
     ...mapActions("movies", ["fetchMovies"]),
