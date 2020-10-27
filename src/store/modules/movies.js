@@ -41,8 +41,9 @@ const moviesStore = {
             },
             root: true, // available for all app
         },
-        async fetchMovies({ getters, commit }) {
+        async fetchMovies({ getters, commit, dispatch }) {
             try {
+                dispatch("toggleLoader", true, { root: true });
                 const { curPage, perPage, slicedIds } = getters;
                 const from = (curPage * perPage) - perPage;
                 const to = curPage * perPage;
@@ -53,6 +54,8 @@ const moviesStore = {
                 commit(MOVIES, movies); //commit method calls the payload for the mutation(mutation, data)
             } catch(err) {
                 console.log(err);
+            } finally {
+                dispatch("toggleLoader", false, { root: true });
             }
         },
         changeCurrentPage({ commit, dispatch }, page) {
