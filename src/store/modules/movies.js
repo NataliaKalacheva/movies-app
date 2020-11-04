@@ -9,7 +9,7 @@ function serializeResponse(movies) {
     }, {});
 }
 
-const { MOVIES, CURRENT_PAGE } = mutations;
+const { MOVIES, CURRENT_PAGE, REMOVE_MOVIE } = mutations;
 
 const moviesStore = {
     namespaced: true,
@@ -24,7 +24,8 @@ const moviesStore = {
         slicedIds: ({ top250 }) => (from, to) => top250.slice(from, to),
         curPage: ({ curPage }) => curPage,
         perPage: ({ perPage }) => perPage,
-        total: ({ top250 }) => Object.keys(top250).length
+        total: ({ top250 }) => Object.keys(top250).length,
+        top250: ({ top250 }) => top250
     },
     mutations: {
         [MOVIES](state, value) {
@@ -32,6 +33,10 @@ const moviesStore = {
         },
         [CURRENT_PAGE](state, value) {
             state.curPage = value;
+        },
+        [REMOVE_MOVIE](state, index) {
+            console.log(state, index);
+            state.top250 = state.top250.splice(index, 1);
         } 
     },
     actions: {
@@ -60,6 +65,11 @@ const moviesStore = {
         },
         changeCurrentPage({ commit, dispatch }, page) {
             commit(CURRENT_PAGE, page);
+            dispatch("fetchMovies");
+        },
+        removeMovie({ commit, getters, dispatch }, movieId) {
+            const { top250 } = getters;
+            commit(REMOVE_MOVIE, top250.indexOf(movieId)); 
             dispatch("fetchMovies");
         }
     }

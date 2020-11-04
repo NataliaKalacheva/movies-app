@@ -8,7 +8,8 @@
         </div>
         <b-btn-group class="movie-item__controls mx-1">
           <b-button variant="outline-light">Edit</b-button>
-          <b-button variant="outline-light">Remove</b-button>
+          <b-button variant="outline-light"
+                    @click="emitRemoveItem()">Remove</b-button>
         </b-btn-group>
       </div>
   </div>
@@ -29,6 +30,11 @@
             "background-image": `url(${this.movie.Poster})`
           }
         } 
+      },
+      methods: {
+        emitRemoveItem() {
+          this.$emit("removeItem", this.movie);
+        }
       }
  }
 </script>
