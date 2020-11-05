@@ -1,6 +1,5 @@
 <template>
   <BContainer>
-    <h3 class="list-title">IMDB Top 250</h3>
     <BRow>
       <template v-if="isExist">
         <BCol cols md="6" lg="3" v-for="(movie, key) in list" :key="key">
@@ -45,12 +44,11 @@ export default {
       async onRemoveItem(movie) {
          const id = movie.imdbID;
          const title = movie.Title;
-         console.log(id, title);
+
          await this.$bvModal.msgBoxConfirm(`Are you sure you want to delete ${title}?`)
           .then(isConfirmed => {
             if (isConfirmed) {
               this.removeMovie(id);
-              console.log(id, isConfirmed);
             } 
           })
           .catch(err => {

@@ -1,6 +1,7 @@
 
 <template>
   <div id="app">
+    <Header/>
     <Loader/>
     <PagePoster :poster="pagePoster"/>
     <MoviesList :list="moviesList" @changePoster="onChangePoster"/>
@@ -13,6 +14,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import Header from "@/components/Header";
 import MoviesList from "@/components/MoviesList";
 import PagePoster from "@/components/PagePoster";
 import Pagination from "@/components/Pagination";
@@ -21,6 +23,7 @@ import Loader from "@/components/Loader";
 export default {
   name: "App",
   components: {
+    Header,
     MoviesList,
     PagePoster,
     Pagination,
@@ -57,6 +60,8 @@ export default {
 <style>
 #app {
   position: relative;
+  min-height: 100vh;
+  padding-top: 100px;
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

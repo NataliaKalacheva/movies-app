@@ -35,8 +35,7 @@ const moviesStore = {
             state.curPage = value;
         },
         [REMOVE_MOVIE](state, index) {
-            console.log(state, index);
-            state.top250 = state.top250.splice(index, 1);
+            state.top250.splice(index, 1);
         } 
     },
     actions: {
@@ -71,6 +70,23 @@ const moviesStore = {
             const { top250 } = getters;
             commit(REMOVE_MOVIE, top250.indexOf(movieId)); 
             dispatch("fetchMovies");
+        },
+        async searchMovie({ commit, dispatch }, query) {
+           try {
+               dispatch("toggleLoader", true, { root: true });
+               const response = await axios.get(`/?s=${query}`);
+               if (response.Error) {
+                   throw Error(response.Error);
+               } else {
+                   const movies = serializeResponse(response.Search);
+                   commit(MOVIES, movies); 
+                   console.log(response);
+               }
+            } catch(err) {
+                console.log(err.message);
+            } finally {
+                dispatch("toggleLoader", false, { root: true });
+            }
         }
     }
 };
