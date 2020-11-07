@@ -2,7 +2,7 @@
  <div class="header">
      <b-navbar class="navbar mb-5 p-0 py-2" toggleable="lg" type="dark" fixed="top">
       <BContainer>
-        <b-navbar-brand href="#" tag="h1">IMDB Top 250</b-navbar-brand>
+        <b-navbar-brand href="#" tag="h1">Movies App</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
@@ -32,12 +32,14 @@ export default {
         searchValue: "onSearchValueChanged"
     },
     methods: {
-        ...mapActions("movies", ["searchMovie", "fetchMovies"]),
+        ...mapActions("movies", ["searchMovie", "fetchMovies", "toggleSearchState"]),
         onSearchValueChanged(query) {
             if (query) {
                this.searchMovie(query);
+               this.toggleSearchState(true);
             } else {
                 this.fetchMovies();
+                this.toggleSearchState(false);
             }
         }
     }

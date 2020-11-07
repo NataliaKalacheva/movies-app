@@ -1,5 +1,6 @@
 <template>
   <BContainer>
+    <h1 class="list-title">{{ listTitle }}</h1>
     <BRow>
       <template v-if="isExist">
         <BCol cols md="6" lg="3" v-for="(movie, key) in list" :key="key">
@@ -18,7 +19,7 @@
 
 <script>
 import MovieItem from "./MovieItem";
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     name: "MoviesList",
@@ -32,12 +33,17 @@ export default {
       MovieItem
     },
     computed: {
+        ...mapGetters("movies", ["isSearch", "searchQuery"]),
         isExist() {
             return Boolean(Object.keys(this.list).length);
+        },
+        listTitle() {
+          return this.isSearch ? `Search results: ${this.searchQuery}` : "Imdb top 250"
         }
     },
     methods: {
       ...mapActions("movies", ["removeMovie"]),
+      ...mapActions(["showNotify"]),
       onMouseOver(poster) {
         this.$emit("changePoster", poster);
       },
@@ -49,6 +55,12 @@ export default {
           .then(isConfirmed => {
             if (isConfirmed) {
               this.removeMovie(id);
+              const notification = {
+                    variant: "success",
+                    msg: "Movie deleted successful",
+                    title: "Success"
+                };
+              this.showNotify(notification);
             } 
           })
           .catch(err => {

@@ -9,7 +9,7 @@ function serializeResponse(movies) {
     }, {});
 }
 
-const { MOVIES, CURRENT_PAGE, REMOVE_MOVIE } = mutations;
+const { MOVIES, CURRENT_PAGE, REMOVE_MOVIE, TOGGLE_SEARCH, SEARCH_QUERY } = mutations;
 
 const moviesStore = {
     namespaced: true,
@@ -17,7 +17,9 @@ const moviesStore = {
         top250: IDs,
         perPage: 12,
         curPage: 1,
-        movies: {}
+        movies: {},
+        isSearch: false,
+        searchQuery: ""
     },
     getters: {
         moviesList: ({ movies }) => movies,
@@ -25,7 +27,9 @@ const moviesStore = {
         curPage: ({ curPage }) => curPage,
         perPage: ({ perPage }) => perPage,
         total: ({ top250 }) => Object.keys(top250).length,
-        top250: ({ top250 }) => top250
+        top250: ({ top250 }) => top250,
+        isSearch: ({ isSearch }) => isSearch,
+        searchQuery: ({ searchQuery }) => searchQuery
     },
     mutations: {
         [MOVIES](state, value) {
@@ -36,6 +40,12 @@ const moviesStore = {
         },
         [REMOVE_MOVIE](state, index) {
             state.top250.splice(index, 1);
+        },
+        [TOGGLE_SEARCH](state, boolean) {
+            state.isSearch = boolean;
+        },
+        [SEARCH_QUERY](state, query) {
+            state.searchQuery = query;
         } 
     },
     actions: {
@@ -73,6 +83,7 @@ const moviesStore = {
         },
         async searchMovie({ commit, dispatch }, query) {
            try {
+               commit(SEARCH_QUERY, query);
                dispatch("toggleLoader", true, { root: true });
                const response = await axios.get(`/?s=${query}`);
                if (response.Error) {
@@ -83,10 +94,18 @@ const moviesStore = {
                    console.log(response);
                }
             } catch(err) {
-                console.log(err.message);
+                const notification = {
+                    variant: "danger",
+                    msg: err.message,
+                    title: "Error"
+                };
+                dispatch("showNotify", notification, { root: true });
             } finally {
                 dispatch("toggleLoader", false, { root: true });
             }
+        },
+        toggleSearchState({ commit }, boolean) {
+            commit(TOGGLE_SEARCH, boolean);
         }
     }
 };
