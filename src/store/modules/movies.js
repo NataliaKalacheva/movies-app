@@ -49,12 +49,6 @@ const moviesStore = {
         } 
     },
     actions: {
-        initMoviesStore: {
-            handler({ dispatch }) { 
-                dispatch("fetchMovies");
-            },
-            root: true, // available for all app
-        },
         async fetchMovies({ getters, commit, dispatch }) {
             try {
                 dispatch("toggleLoader", true, { root: true });

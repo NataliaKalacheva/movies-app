@@ -7,7 +7,8 @@
           <span class="movie-item__year">{{ movie.Year }}</span>
         </div>
         <b-btn-group class="movie-item__controls mx-1">
-          <b-button variant="outline-light">Edit</b-button>
+          <b-button variant="outline-light"
+                    @click="showInfoModal()">Info</b-button>
           <b-button variant="outline-light"
                     @click="emitRemoveItem()">Remove</b-button>
         </b-btn-group>
@@ -34,6 +35,9 @@
       methods: {
         emitRemoveItem() {
           this.$emit("removeItem", this.movie);
+        },
+        showInfoModal() {
+          this.$emit("showModal", this.movie.imdbID);
         }
       }
  }
