@@ -2,7 +2,7 @@
     <div class="movie-info">
        <header class="movie-info__header">
           <h6 class="movie-info__title">{{ selectedMovie.Title }}</h6>
-          <b-icon-x class="movie-info__close" @click="closeModal()">Close Me</b-icon-x>
+          <b-icon-x class="movie-info__close" size="lg" @click="closeModal()">Close Me</b-icon-x>
        </header>
        <section class="movie-info__content">
          <b-row>
@@ -11,7 +11,19 @@
                 <img :src="selectedMovie.Poster" :alt="selectedMovie.Title" class="movie-info__img">
               </div>
             </b-col>
-            <b-col sm="8"></b-col>
+            <b-col sm="8">
+              <h6 class="movie-info__title">{{ selectedMovie.Title }}</h6>
+              <p class="movie-info__rating">
+                  <b-form-rating v-model="selectedMovie.Ratings[0].Value"  stars="10"  color="#9538d1" show-value show-value-max no-border inline></b-form-rating>
+              </p>
+              <p class="movie-info__desc">{{ selectedMovie.Plot }}</p>
+              <p class="movie-info__tags">  
+                  <b-badge variant="dark" class="p-2 mr-2">{{ selectedMovie.Released }}</b-badge>
+                  <b-badge variant="dark" class="p-2 mr-2">{{ selectedMovie.Runtime }}</b-badge>
+                  <b-badge variant="dark" class="p-2 mr-2">{{ selectedMovie.Centre }}</b-badge>
+                  <b-badge variant="dark" class="p-2 mr-2">{{ selectedMovie.Language }}</b-badge>
+              </p>
+            </b-col>
          </b-row>
        </section>
     </div>
@@ -29,6 +41,7 @@
         methods: {
             closeModal() {
                 console.log('close');
+                this.$bvModal.hide('modal-info')
             }
         }
     }
@@ -58,6 +71,10 @@
         &__content {
             padding: 1rem;
             background: #fff;
+        }
+
+        &__rating /deep/ .b-rating {
+            padding: 1rem 0;
         }
 
     }
