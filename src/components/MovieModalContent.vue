@@ -23,6 +23,32 @@
                   <b-badge variant="dark" class="p-2 mr-2">{{ selectedMovie.Centre }}</b-badge>
                   <b-badge variant="dark" class="p-2 mr-2">{{ selectedMovie.Language }}</b-badge>
               </p>
+              <table class="table small">
+                <tr>
+                  <td>Production</td>
+                  <td>{{ selectedMovie.Production }}</td>
+                </tr>
+                <tr>
+                  <td>Country</td>
+                  <td>{{ selectedMovie.Country }}</td>
+                </tr>
+                <tr>
+                  <td>Actors</td>
+                  <td>{{ selectedMovie.Actors }}</td>
+                </tr>
+                <tr>
+                  <td>Director</td>
+                  <td>{{ selectedMovie.Director }}</td>
+                </tr>
+                <tr>
+                  <td>Awards</td>
+                  <td>{{ selectedMovie.Awards }}</td>
+                </tr>
+                <tr>
+                  <td>Genre</td>
+                  <td>{{ selectedMovie.Genre }}</td>
+                </tr>
+              </table>
             </b-col>
          </b-row>
        </section>
